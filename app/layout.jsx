@@ -9,7 +9,7 @@ export const metadata = {
 const MainLayout = ({ children }) => {
   return (
     <html lang="en">
-      <body>
+      <body className=" flex flex-col min-h-[100vh]">
         <Navbar />
         <div>{children}</div>
         <Footer/>
