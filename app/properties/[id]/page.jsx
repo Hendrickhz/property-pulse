@@ -1,11 +1,22 @@
 "use client";
 
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
+import Spinner from "@/components/Spinner";
 import { fetchProperty } from "@/utils/requests";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaBath, FaBed, FaBookmark, FaCheck, FaMapMarker, FaPaperPlane, FaRulerCombined, FaShare, FaTimes } from "react-icons/fa";
+import {
+  FaBath,
+  FaBed,
+  FaBookmark,
+  FaCheck,
+  FaMapMarker,
+  FaPaperPlane,
+  FaRulerCombined,
+  FaShare,
+  FaTimes,
+} from "react-icons/fa";
 
 const PropertyIdPage = () => {
   const [property, setProperty] = useState(null);
@@ -36,6 +47,7 @@ const PropertyIdPage = () => {
   }
   return (
     <>
+      {loading && <Spinner loading={loading} />}
       {property && !loading && (
         <>
           <PropertyHeaderImage image={property.images[0]} />
