@@ -89,11 +89,47 @@ const PropertyAddForm = () => {
     },
     images: [],
   });
-  const handleChange = () => {};
-  const handleAmenitiesChange = () => {};
-  const handleImageChange = () => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // console.log(name, value);
+    if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".");
+
+      setFields((prev) => ({
+        ...prev,
+        [outerKey]: { ...prev[outerKey], [innerKey]: value },
+      }));
+    } else {
+      setFields((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+  const handleAmenitiesChange = (e) => {
+    const { value, checked } = e.target;
+    //clone the current amenities list
+    const updatedAmenities = [...fields.amenities];
+    if (checked) {
+      //add the value to the list
+      updatedAmenities.push(value);
+    } else {
+      const index = updatedAmenities.indexOf(value);
+      if (index !== -1) {
+        updatedAmenities.splice(index, 1);
+      }
+    }
+    setFields((prev) => ({ ...prev, amenities: updatedAmenities }));
+  };
+  const handleImageChange = (e) => {
+    const { files } = e.target;
+    //copy the current images data
+    const updatedImagesData = [...fields.images];
+
+    for (const file of files) {
+      updatedImagesData.push(file);
+    }
+    setFields((prev) => ({ ...prev, images: [...updatedImagesData] }));
+  };
   return (
-    <form>
+    <form encType="multipart/form-data" action="/api/properties" method="POST">
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
       <div className="mb-4">
         <label
@@ -104,7 +140,7 @@ const PropertyAddForm = () => {
         </label>
         <select
           id="property_type"
-          name="property_type"
+          name="type"
           className="border rounded w-full py-2 px-3"
           required
           value={fields.type}
@@ -320,7 +356,7 @@ const PropertyAddForm = () => {
         <input
           type="text"
           id="seller_name"
-          name="seller_info.name."
+          name="seller_info.name"
           className="border rounded w-full py-2 px-3"
           placeholder="Name"
           value={fields.seller_info.name}
