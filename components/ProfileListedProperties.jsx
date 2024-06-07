@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-toastify";
 
 const ProfileListedProperties = ({ properties, setProperties }) => {
   const handleDeleteProperty = async (propertyId) => {
@@ -17,14 +18,14 @@ const ProfileListedProperties = ({ properties, setProperties }) => {
           setProperties((prev) =>
             [...prev].filter((property) => property._id !== propertyId)
           );
-          return alert("This property is deleted successfully.");
+          return toast("This property is deleted successfully.");
         } else {
-          alert("Failed to deleted.");
+          toast.error("Failed to deleted.");
         }
       }
     } catch (error) {
       console.log(error);
-      alert("Failed to deleted.");
+      toast.error("Failed to deleted.");
     }
   };
   return (
@@ -50,8 +51,8 @@ const ProfileListedProperties = ({ properties, setProperties }) => {
           </div>
           <div className="mt-2">
             <Link
-              href="/add-property.html"
-              class="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
+              href={`/properties/${property._id}/edit`}
+              className="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
             >
               Edit
             </Link>
