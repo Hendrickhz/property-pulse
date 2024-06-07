@@ -81,13 +81,11 @@ export const POST = async (request) => {
         }
       );
       imageUploadPromises.push(result.secure_url);
-
-      //wait for all images to upload
-      const uploadedImages = await Promise.all(imageUploadPromises);
-      // add uploaded images data to property data object
-      propertyData.images = uploadedImages;
     }
-
+    //wait for all images to upload
+    const uploadedImages = await Promise.all(imageUploadPromises);
+    // add uploaded images data to property data object
+    propertyData.images = uploadedImages;
     const newProperty = new Property(propertyData);
     await newProperty.save();
 
