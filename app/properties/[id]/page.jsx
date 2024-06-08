@@ -65,7 +65,7 @@ const PropertyIdPage = () => {
                   <BookmarkBtn propertyId={property._id} />
                   <ShareBtn property={property} />
                   {/* <!-- Contact Form --> */}
-                  <PropertyContactForm />
+                  <PropertyContactForm property={property} />
                 </aside>
               </div>
             </div>
