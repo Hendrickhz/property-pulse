@@ -63,7 +63,7 @@ const PropertyIdPage = () => {
                 {/* <!-- Sidebar --> */}
                 <aside className="space-y-4">
                   <BookmarkBtn propertyId={property._id} />
-                  <ShareBtn />
+                  <ShareBtn property={property} />
                   {/* <!-- Contact Form --> */}
                   <PropertyContactForm />
                 </aside>
