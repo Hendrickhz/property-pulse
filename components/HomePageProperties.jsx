@@ -1,12 +1,35 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
 import { fetchProperties } from "@/utils/requests";
 const HomePageProperties = async () => {
-  const data = await fetchProperties();
-  const recentProperties = data.properties
+  // const data = await fetchProperties();
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await fetch("/api/properties");
+        if (res.status == 200) {
+          const data = await res.json();
+          setProperties(data.properties);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProperties();
+  }, []);
+  const recentProperties = properties
     .sort(() => Math.random() - Math.random())
     .slice(0, 3);
+
+  if (loading) {
+    return <p>Loading....</p>;
+  }
   return (
     <>
       <section className="px-4 py-6">
