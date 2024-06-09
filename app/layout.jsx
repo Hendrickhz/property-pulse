@@ -16,6 +16,9 @@ const MainLayout = ({ children }) => {
     <GlobalProvider>
       <AuthProvider>
         <html lang="en">
+          <head>
+            <link rel="icon" href="/logo.png" sizes="any" />
+          </head>
           <body className=" flex flex-col min-h-[100vh]">
             <Navbar />
             <div>{children}</div>
