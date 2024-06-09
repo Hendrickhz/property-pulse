@@ -11,12 +11,21 @@ export const GET = async (request) => {
       return new Response("User Id is required", { status: 401 });
     }
 
-    const messages = await Message.find({
+    const unreadMessages = await Message.find({
       recipient: sessionUser.userId,
+      read: false,
     })
+      .sort({ createdAt: -1 })
       .populate("sender", "username")
       .populate("property", "name");
-
+    const readMessages = await Message.find({
+      recipient: sessionUser.userId,
+      read: true,
+    })
+      .sort({ createdAt: -1 })
+      .populate("sender", "username")
+      .populate("property", "name");
+    const messages = [...unreadMessages, ...readMessages];
     return new Response(JSON.stringify(messages), { status: 200 });
   } catch (error) {
     console.log(error);
