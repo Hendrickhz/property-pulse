@@ -1,10 +1,11 @@
 import "@/assets/css/globals.css";
+import "photoswipe/dist/photoswipe.css";
 import AuthProvider from "@/components/AuthProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {GlobalProvider} from "@/context/GlobalContext";
+import { GlobalProvider } from "@/context/GlobalContext";
 export const metadata = {
   title: "Property Pulse | Find Your Perfect Rental",
   description: "Find Your Dream Rental",
