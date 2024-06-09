@@ -7,17 +7,30 @@ import { getSessionUser } from "@/utils/getSessionUser";
 export const GET = async (request) => {
   try {
     await connectDB();
+    const page = request.nextUrl.searchParams.get("page") || 1;
+    const pageSize = request.nextUrl.searchParams.get("pageSize") || 9;
 
-    const properties = await Property.find({});
+    const skip = (page - 1) * pageSize;
+
+    const totalProperties = await Property.countDocuments({});
+    const properties = await Property.find({}).skip(skip).limit(pageSize);
     if (!properties) {
       return new Response("Properties Not Found", { status: 404 });
     }
-    return new Response(JSON.stringify(properties), { status: 200 });
+    const result = {
+      total: totalProperties,
+      properties,
+    };
+
+    return new Response(JSON.stringify(result), {
+      status: 200,
+    });
   } catch (error) {
     console.log(error);
     return new Response("Something went wrong...", { status: 500 });
   }
 };
+
 
 // POST /api/properties
 export const POST = async (request) => {
